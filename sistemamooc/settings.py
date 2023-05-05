@@ -37,9 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', 
+    'django.contrib.redirects',
 
     'core',
-    'courses'
+    'courses',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +129,19 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST
+# EMAIL_PORT
+# EMAIL_HOST_USER
+# EMAIL_HOST_PASSWORD
+# EMAIL_USE_TLS
+# EMAIL_USE_SSL
+# EMAIL_TIMEOUT
+# EMAIL_SSL_KEYFILE
+# EMAIL_SSL_CERTFILE
+
+# Auth
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = 'accounts:logout'
