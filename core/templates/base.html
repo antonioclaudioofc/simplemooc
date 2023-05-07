@@ -31,7 +31,10 @@
           <li>
             <a href="{% url 'contact' %}">Contato</a>
           </li>
-          {% if user.is_authenticated %} 
+          {% if user.is_authenticated %}
+          <li>
+            <a href="{% url 'accounts:dashboard' %}">Painel</a>
+          </li>
           <li>
             <a href="{% url 'accounts:logout' %}">Sair</a>
           </li>

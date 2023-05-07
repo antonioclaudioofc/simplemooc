@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth import authenticate, login
 from .form import RegisterForm
+from django.contrib.auth.decorators import login_required
+
 
 def register(request):
     template_name = 'accounts/register.html'
@@ -11,9 +13,9 @@ def register(request):
 
         if form.is_valid():
             user = form.save()
-            user = authenticate(username=user.name, password=form.cleaned_data['password1'])
+            user = authenticate(username=user.username, password=form.cleaned_data['password1'])
             login(request, user)
-            return redirect('home')
+            return redirect('/')
     else:
         form = RegisterForm()
 
@@ -21,3 +23,8 @@ def register(request):
         'form': form
     }
     return render(request, template_name, context)
+
+@login_required
+def dashboard(request):
+    template_name = 'accounts/dashboard.html'
+    return render(request, template_name)
