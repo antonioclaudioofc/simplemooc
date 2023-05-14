@@ -4,6 +4,8 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login
 from .form import RegisterForm, EditAccountForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from courses.models import Enrollment
 
 
 def register(request):
@@ -28,7 +30,9 @@ def register(request):
 @login_required
 def dashboard(request):
     template_name = 'accounts/dashboard.html'
-    return render(request, template_name)
+    context = {}
+    context['enrollments'] = Enrollment.objects.filter(user=request.user)
+    return render(request, template_name, context)
 
 @login_required
 def edit(request):
@@ -40,8 +44,8 @@ def edit(request):
 
         if form.is_valid():
             form.save()
-            form = EditAccountForm(instance=request.user)
-            context['success'] = True
+            messages.success(request, 'Os dados da sua conta foram alterardos com sucesso')
+            return redirect('accounts:dashboard')
     else: 
         form = EditAccountForm(instance=request.user)
     
